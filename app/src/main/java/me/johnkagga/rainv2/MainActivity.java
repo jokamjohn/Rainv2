@@ -61,7 +61,11 @@ public class MainActivity extends ActionBarActivity {
                     //Log.v(TAG,jsonData);
                     if (response.isSuccessful()){
                         Log.v(TAG,jsonData);
-                        mCurrentWeather = getCurrentDetails(jsonData);
+                        try {
+                            mCurrentWeather = getCurrentDetails(jsonData);
+                        } catch (JSONException e) {
+                            Log.e(TAG,"Jsonobject: ", e);
+                        }
                     }
                     else {
                         alertUserAboutError();
@@ -77,21 +81,24 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private CurrentWeather getCurrentDetails(String jsonData) {
+    private CurrentWeather getCurrentDetails(String jsonData) throws JSONException{
         /*
         throws helps us pass the exception to where the method is called
          */
-        try {
-            JSONObject forecast = new JSONObject(jsonData);
-            String timezone = forecast.getString("timezone");
-            Log.i(TAG, "the time zone is: "+timezone);
-            JSONObject currently = forecast.getJSONObject("currently");
-            Log.i(TAG, "Json object is: "+currently);
-        } catch (JSONException e) {
-            Log.e(TAG,"Jsonobject: ", e);
-        }
+        JSONObject forecast = new JSONObject(jsonData);
+        String timezone = forecast.getString("timezone");
+        Log.i(TAG, "the time zone is: "+timezone);
+        JSONObject currently = forecast.getJSONObject("currently");
+        Log.i(TAG, "Json object is: "+currently);
 
-        return null;
+        CurrentWeather currentWeather = new CurrentWeather();
+        currentWeather.setTime(currently.getLong("time"));
+        currentWeather.setSummary(currently.getString("summary"));
+        currentWeather.setIcon(currently.getString("icon"));
+        currentWeather.setPrecipeChance(currently.getDouble("precipProbability"));
+        currentWeather.setTemperature(currently.getDouble("temperature"));
+
+        return currentWeather;
 
     }
 
