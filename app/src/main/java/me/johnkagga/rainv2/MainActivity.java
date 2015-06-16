@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.precip_value)TextView mPrecipValue;
     @InjectView(R.id.summary_label)TextView mSummaryLabel;
     @InjectView(R.id.icon_imageView)ImageView mIconImage;
+    @InjectView(R.id.refresh_imageview)ImageView mRefreshImage;
 
 
 
@@ -47,6 +49,12 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        mRefreshImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         String apiKey = "5a20df57556bd8bcb4924c5a083bc653";
         double latitude = 37.8267;
@@ -114,7 +122,7 @@ public class MainActivity extends ActionBarActivity {
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() +"");
         mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
         mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
-        mPrecipValue.setText(mCurrentWeather.getPrecipeChance()+ "%");
+        mPrecipValue.setText(mCurrentWeather.getPrecipeChance() + "%");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
         Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
         mIconImage.setImageDrawable(drawable);
