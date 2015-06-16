@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-
+        mProgressBar.setVisibility(View.INVISIBLE);
         final double latitude = 37.8267;
         final double longitude = -122.423;
         mRefreshImage.setOnClickListener(new View.OnClickListener() {
