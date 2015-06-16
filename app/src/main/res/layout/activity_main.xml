@@ -38,4 +38,15 @@
         android:layout_centerHorizontal="true"
         android:textColor="#80ffffff"
         android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kampala Uganda UG"
+        android:id="@+id/location_label"
+        android:layout_above="@+id/time_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"/>
 </RelativeLayout>
