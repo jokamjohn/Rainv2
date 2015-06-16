@@ -6,4 +6,5 @@
     <string name="error_title">Ooops....sorry</string>
     <string name="error_message">Try again</string>
     <string name="error_ok_button_text">Ok</string>
+    <string name="network_toast">Network Not Available</string>
 </resources>
