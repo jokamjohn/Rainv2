@@ -87,9 +87,9 @@ public class MainActivity extends ActionBarActivity {
          */
         JSONObject forecast = new JSONObject(jsonData);
         String timezone = forecast.getString("timezone");
-        Log.i(TAG, "the time zone is: "+timezone);
+        Log.i(TAG, "the time zone is: " + timezone);
         JSONObject currently = forecast.getJSONObject("currently");
-        Log.i(TAG, "Json object is: "+currently);
+        Log.i(TAG, "Json object is: " + currently);
 
         CurrentWeather currentWeather = new CurrentWeather();
         currentWeather.setTime(currently.getLong("time"));
@@ -97,7 +97,9 @@ public class MainActivity extends ActionBarActivity {
         currentWeather.setIcon(currently.getString("icon"));
         currentWeather.setPrecipeChance(currently.getDouble("precipProbability"));
         currentWeather.setTemperature(currently.getDouble("temperature"));
+        currentWeather.setTimeZone(timezone);
 
+        Log.i(TAG,"time is: "+ currentWeather.getFormattedTime());
         return currentWeather;
 
     }
