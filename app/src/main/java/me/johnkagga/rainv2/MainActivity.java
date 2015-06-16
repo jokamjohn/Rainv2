@@ -52,10 +52,15 @@ public class MainActivity extends ActionBarActivity {
         mRefreshImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getForecast();
             }
         });
 
+        getForecast();
+        Log.i(TAG,"main thread");
+    }
+
+    private void getForecast() {
         String apiKey = "5a20df57556bd8bcb4924c5a083bc653";
         double latitude = 37.8267;
         double longitude = -122.423;
@@ -63,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
         String forecastUrl = "https://api.forecast.io/forecast/" + apiKey + "/"
                 + latitude + "," + longitude;
 
-        Log.v(TAG,forecastUrl);
+        Log.v(TAG, forecastUrl);
 
         if (isNetworkAvailable()) {
         /*
@@ -85,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
                 public void onResponse(Response response) throws IOException {
                     String jsonData = response.body().string();
                     //Log.v(TAG,jsonData);
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         Log.v(TAG, jsonData);
 
 
@@ -101,16 +106,14 @@ public class MainActivity extends ActionBarActivity {
                                 }
                             });
                         } catch (JSONException e) {
-                            Log.e(TAG,"Jsonobject: ", e);
+                            Log.e(TAG, "Jsonobject: ", e);
                         }
-                    }
-                    else {
+                    } else {
                         alertUserAboutError();
                     }
 
                 }
             });
-            Log.i(TAG,"main thread");
 
         }
         else {
