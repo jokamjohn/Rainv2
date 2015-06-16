@@ -1,6 +1,7 @@
 package me.johnkagga.rainv2;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -32,8 +33,8 @@ public class MainActivity extends ActionBarActivity {
 
     @InjectView(R.id.temperature_label)TextView mTemperatureLabel;
     @InjectView(R.id.time_label)TextView mTimeLabel;
-    @InjectView(R.id.humidity_label)TextView mHumidityLabel;
-    @InjectView(R.id.precip_label)TextView mPrecipLabel;
+    @InjectView(R.id.humidity_value)TextView mHumidityValue;
+    @InjectView(R.id.precip_value)TextView mPrecipValue;
     @InjectView(R.id.summary_label)TextView mSummaryLabel;
     @InjectView(R.id.icon_imageView)ImageView mIconImage;
 
@@ -111,6 +112,12 @@ public class MainActivity extends ActionBarActivity {
 
     private void upDateDisplay() {
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() +"");
+        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
+        mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
+        mPrecipValue.setText(mCurrentWeather.getPrecipeChance()+ "%");
+        mSummaryLabel.setText(mCurrentWeather.getSummary());
+        Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
+        mIconImage.setImageDrawable(drawable);
     }
 
     private CurrentWeather getCurrentDetails(String jsonData) throws JSONException{
