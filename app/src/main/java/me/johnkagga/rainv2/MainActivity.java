@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.summary_label)TextView mSummaryLabel;
     @InjectView(R.id.icon_imageView)ImageView mIconImage;
     @InjectView(R.id.refresh_imageview)ImageView mRefreshImage;
+    @InjectView(R.id.progressBar)ProgressBar mProgressBar;
 
 
 
@@ -48,6 +50,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
 
         final double latitude = 37.8267;
         final double longitude = -122.423;
