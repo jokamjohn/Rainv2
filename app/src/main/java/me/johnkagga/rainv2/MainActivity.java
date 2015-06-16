@@ -14,12 +14,16 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    private CurrentWeather mCurrentWeather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,10 @@ public class MainActivity extends ActionBarActivity {
         double latitude = 37.8267;
         double longitude = -122.423;
 
-        String forecastUrl = "https://api.forecast.io/forecast/" + apiKey + "/ "
+        String forecastUrl = "https://api.forecast.io/forecast/" + apiKey + "/"
                 + latitude + "," + longitude;
+
+        Log.v(TAG,forecastUrl);
 
         if (isNetworkAvailable()) {
         /*
@@ -42,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
             Request request = new Request.Builder()
                     .url(forecastUrl)
                     .build();
-            Call call = client.newCall(request);
+            Call call =client.newCall(request);
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
@@ -51,24 +57,39 @@ public class MainActivity extends ActionBarActivity {
 
                 @Override
                 public void onResponse(Response response) throws IOException {
-                    try {
-                        if (response.isSuccessful()) {
-                            //logging the whole response body
-                            Log.d(TAG, response.body().string());
-                        } else {
-                            alertUserAboutError();
-                        }
-                    } catch (IOException e) {
-                        Log.v(TAG, "Exception caught: ", e);
+                    String jsonData = response.body().string();
+                    //Log.v(TAG,jsonData);
+                    if (response.isSuccessful()){
+                        Log.v(TAG,jsonData);
+                        mCurrentWeather = getCurrentDetails(jsonData);
                     }
+                    else {
+                        alertUserAboutError();
+                    }
+
                 }
             });
+            Log.i(TAG,"main thread");
+
         }
         else {
-            Toast.makeText(this,getString(R.string.network_toast),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.network_toast), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private CurrentWeather getCurrentDetails(String jsonData) {
+        /*
+        throws helps us pass the exception to where the method is called
+         */
+        try {
+            JSONObject forecast = new JSONObject(jsonData);
+            String timezone = forecast.getString("timezone");
+            Log.i(TAG, "the time zone is: "+timezone);
+        } catch (JSONException e) {
+            Log.e(TAG,"Jsonobject: ", e);
         }
 
-        Log.d(TAG, "Main thread is working");
+        return null;
 
     }
 
