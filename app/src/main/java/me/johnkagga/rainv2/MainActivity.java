@@ -85,6 +85,8 @@ public class MainActivity extends ActionBarActivity {
             JSONObject forecast = new JSONObject(jsonData);
             String timezone = forecast.getString("timezone");
             Log.i(TAG, "the time zone is: "+timezone);
+            JSONObject currently = forecast.getJSONObject("currently");
+            Log.i(TAG, "Json object is: "+currently);
         } catch (JSONException e) {
             Log.e(TAG,"Jsonobject: ", e);
         }
