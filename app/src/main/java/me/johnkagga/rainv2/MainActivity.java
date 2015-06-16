@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
         });
 
         getForecast(latitude,longitude);
-        Log.i(TAG,"main thread");
+        Log.i(TAG, "main thread");
     }
 
     private void getForecast(double latitude,double longitude) {
@@ -75,6 +75,7 @@ public class MainActivity extends ActionBarActivity {
         Log.v(TAG, forecastUrl);
 
         if (isNetworkAvailable()) {
+            toogleRefresh();
         /*
         calling the client and setting up the request
          */
@@ -87,11 +88,26 @@ public class MainActivity extends ActionBarActivity {
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toogleRefresh();
+                        }
+                    });
+
+                    alertUserAboutError();
 
                 }
 
                 @Override
                 public void onResponse(Response response) throws IOException {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toogleRefresh();
+                        }
+                    });
                     String jsonData = response.body().string();
                     //Log.v(TAG,jsonData);
                     if (response.isSuccessful()) {
@@ -122,6 +138,17 @@ public class MainActivity extends ActionBarActivity {
         }
         else {
             Toast.makeText(this, getString(R.string.network_toast), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void toogleRefresh() {
+        if (mProgressBar.getVisibility() == View.INVISIBLE){
+            mProgressBar.setVisibility(View.VISIBLE);
+            mRefreshImage.setVisibility(View.INVISIBLE);
+        }
+        else {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mRefreshImage.setVisibility(View.VISIBLE);
         }
     }
 
