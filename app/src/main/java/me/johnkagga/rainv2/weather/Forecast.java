@@ -1,4 +1,4 @@
-package me.johnkagga.rainv2;
+package me.johnkagga.rainv2.weather;
 
 /**
  * Created by John Kagga on 6/17/2015.

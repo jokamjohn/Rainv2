@@ -1,12 +1,12 @@
-package me.johnkagga.rainv2;
+package me.johnkagga.rainv2.weather;
 
 /**
  * Created by John Kagga on 6/17/2015.
  */
-public class Day {
+public class Hour {
     private long mTime;
     private String mSummary;
-    private double mTemperatureMax;
+    private double mTemperature;
     private String mIcon;
     private String mTimeZone;
 
@@ -26,12 +26,12 @@ public class Day {
         mSummary = summary;
     }
 
-    public double getTemperatureMax() {
-        return mTemperatureMax;
+    public double getTemperature() {
+        return mTemperature;
     }
 
-    public void setTemperatureMax(double temperatureMax) {
-        mTemperatureMax = temperatureMax;
+    public void setTemperature(double temperature) {
+        mTemperature = temperature;
     }
 
     public String getIcon() {

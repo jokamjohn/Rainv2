@@ -1,10 +1,12 @@
-package me.johnkagga.rainv2;
+package me.johnkagga.rainv2.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+
+import me.johnkagga.rainv2.R;
 
 /**
  * Created by John Kagga on 6/16/2015.

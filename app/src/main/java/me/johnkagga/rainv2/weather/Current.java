@@ -1,8 +1,10 @@
-package me.johnkagga.rainv2;
+package me.johnkagga.rainv2.weather;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import me.johnkagga.rainv2.R;
 
 /**
  * Created by John Kagga on 6/16/2015.

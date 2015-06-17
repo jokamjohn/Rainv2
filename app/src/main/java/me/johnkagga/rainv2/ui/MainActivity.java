@@ -1,4 +1,4 @@
-package me.johnkagga.rainv2;
+package me.johnkagga.rainv2.ui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -26,6 +26,8 @@ import java.io.IOException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.johnkagga.rainv2.R;
+import me.johnkagga.rainv2.weather.Current;
 
 
 public class MainActivity extends ActionBarActivity {
