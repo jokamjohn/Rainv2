@@ -28,7 +28,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.johnkagga.rainv2.R;
 import me.johnkagga.rainv2.weather.Current;
+import me.johnkagga.rainv2.weather.Day;
 import me.johnkagga.rainv2.weather.Forecast;
+import me.johnkagga.rainv2.weather.Hour;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -124,12 +126,10 @@ public class MainActivity extends ActionBarActivity {
                                     upDateDisplay();
                                 }
                             });
-                        }
-                        else {
+                        } else {
                             alertUserAboutError();
                         }
-                    }
-                    catch (JSONException e) {
+                    } catch (JSONException e) {
                         Log.e(TAG, "Jsonobject: ", e);
                     }
 
@@ -169,8 +169,20 @@ public class MainActivity extends ActionBarActivity {
         Forecast forecast = new Forecast();
         //setting current through forecast object
         forecast.setCurrent(getCurrentDetails(jsonData));
+        forecast.setHours(getHourlyForecast(jsonData));
+        forecast.setDays(getDailyForecast(jsonData));
         return forecast;
     }
+
+    private Hour[] getHourlyForecast(String jsonData) {
+        return new Hour[0];
+    }
+
+    private Day[] getDailyForecast(String jsonData) {
+        return new Day[0];
+    }
+
+
 
     private Current getCurrentDetails(String jsonData) throws JSONException{
         /*
