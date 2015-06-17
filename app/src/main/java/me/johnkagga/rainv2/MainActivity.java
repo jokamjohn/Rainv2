@@ -31,7 +31,7 @@ import butterknife.InjectView;
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    private CurrentWeather mCurrentWeather;
+    private Current mCurrent;
 
     @InjectView(R.id.temperature_label)TextView mTemperatureLabel;
     @InjectView(R.id.time_label)TextView mTimeLabel;
@@ -115,7 +115,7 @@ public class MainActivity extends ActionBarActivity {
 
 
                         try {
-                            mCurrentWeather = getCurrentDetails(jsonData);
+                            mCurrent = getCurrentDetails(jsonData);
                              /*
                         Add runonUiThread method so that updateDisplay runs on the main UI
                          */
@@ -153,16 +153,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void upDateDisplay() {
-        mTemperatureLabel.setText(mCurrentWeather.getTemperature() +"");
-        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
-        mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
-        mPrecipValue.setText(mCurrentWeather.getPrecipeChance() + "%");
-        mSummaryLabel.setText(mCurrentWeather.getSummary());
-        Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
+        mTemperatureLabel.setText(mCurrent.getTemperature() +"");
+        mTimeLabel.setText("At " + mCurrent.getFormattedTime() + " it will be");
+        mHumidityValue.setText(mCurrent.getHumidity() + "");
+        mPrecipValue.setText(mCurrent.getPrecipeChance() + "%");
+        mSummaryLabel.setText(mCurrent.getSummary());
+        Drawable drawable = getResources().getDrawable(mCurrent.getIconId());
         mIconImage.setImageDrawable(drawable);
     }
 
-    private CurrentWeather getCurrentDetails(String jsonData) throws JSONException{
+    private Current getCurrentDetails(String jsonData) throws JSONException{
         /*
         throws helps us pass the exception to where the method is called
          */
@@ -172,16 +172,16 @@ public class MainActivity extends ActionBarActivity {
         JSONObject currently = forecast.getJSONObject("currently");
         Log.i(TAG, "Json object is: " + currently);
 
-        CurrentWeather currentWeather = new CurrentWeather();
-        currentWeather.setTime(currently.getLong("time"));
-        currentWeather.setSummary(currently.getString("summary"));
-        currentWeather.setIcon(currently.getString("icon"));
-        currentWeather.setPrecipeChance(currently.getDouble("precipProbability"));
-        currentWeather.setTemperature(currently.getDouble("temperature"));
-        currentWeather.setTimeZone(timezone);
+        Current current = new Current();
+        current.setTime(currently.getLong("time"));
+        current.setSummary(currently.getString("summary"));
+        current.setIcon(currently.getString("icon"));
+        current.setPrecipeChance(currently.getDouble("precipProbability"));
+        current.setTemperature(currently.getDouble("temperature"));
+        current.setTimeZone(timezone);
 
-        Log.i(TAG,"time is: "+ currentWeather.getFormattedTime());
-        return currentWeather;
+        Log.i(TAG,"time is: "+ current.getFormattedTime());
+        return current;
 
     }
 
