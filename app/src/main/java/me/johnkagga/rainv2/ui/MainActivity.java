@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.johnkagga.rainv2.R;
 import me.johnkagga.rainv2.weather.Current;
+import me.johnkagga.rainv2.weather.Forecast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -162,6 +163,12 @@ public class MainActivity extends ActionBarActivity {
         mSummaryLabel.setText(mCurrent.getSummary());
         Drawable drawable = getResources().getDrawable(mCurrent.getIconId());
         mIconImage.setImageDrawable(drawable);
+    }
+
+    private Forecast parsingForecastDetails(String jsonData) throws JSONException{
+        Forecast forecast = new Forecast();
+        forecast.setCurrent(getCurrentDetails(jsonData));
+        return forecast;
     }
 
     private Current getCurrentDetails(String jsonData) throws JSONException{
