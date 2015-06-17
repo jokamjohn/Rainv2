@@ -34,7 +34,7 @@ import me.johnkagga.rainv2.weather.Forecast;
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    private Current mCurrent;
+    private Forecast mForecast;
 
     @InjectView(R.id.temperature_label)TextView mTemperatureLabel;
     @InjectView(R.id.time_label)TextView mTimeLabel;
@@ -112,11 +112,9 @@ public class MainActivity extends ActionBarActivity {
                     });
                     try {
                         String jsonData = response.body().string();
-                        Log.v(TAG,jsonData);
+//                        Log.v(TAG,jsonData);
                         if (response.isSuccessful()) {
-
-
-                            mCurrent = getCurrentDetails(jsonData);
+                            mForecast = parsingForecastDetails(jsonData);
                              /*
                         Add run onUiThread method so that updateDisplay runs on the main UI
                          */
@@ -157,17 +155,19 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void upDateDisplay() {
-        mTemperatureLabel.setText(mCurrent.getTemperature() +"");
-        mTimeLabel.setText("At " + mCurrent.getFormattedTime() + " it will be");
-        mHumidityValue.setText(mCurrent.getHumidity() + "");
-        mPrecipValue.setText(mCurrent.getPrecipeChance() + "%");
-        mSummaryLabel.setText(mCurrent.getSummary());
-        Drawable drawable = getResources().getDrawable(mCurrent.getIconId());
+        Current current = mForecast.getCurrent();
+        mTemperatureLabel.setText(current.getTemperature() +"");
+        mTimeLabel.setText("At " + current.getFormattedTime() + " it will be");
+        mHumidityValue.setText(current.getHumidity() + "");
+        mPrecipValue.setText(current.getPrecipeChance() + "%");
+        mSummaryLabel.setText(current.getSummary());
+        Drawable drawable = getResources().getDrawable(current.getIconId());
         mIconImage.setImageDrawable(drawable);
     }
 
     private Forecast parsingForecastDetails(String jsonData) throws JSONException{
         Forecast forecast = new Forecast();
+        //setting current through forecast object
         forecast.setCurrent(getCurrentDetails(jsonData));
         return forecast;
     }
@@ -180,7 +180,7 @@ public class MainActivity extends ActionBarActivity {
         String timezone = forecast.getString("timezone");
         Log.i(TAG, "the time zone is: " + timezone);
         JSONObject currently = forecast.getJSONObject("currently");
-        Log.i(TAG, "Json object is: " + currently);
+        //Log.i(TAG, "Json object is: " + currently);
 
         Current current = new Current();
         current.setTime(currently.getLong("time"));
