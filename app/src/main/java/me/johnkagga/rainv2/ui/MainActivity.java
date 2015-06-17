@@ -104,23 +104,21 @@ public class MainActivity extends ActionBarActivity {
 
                 @Override
                 public void onResponse(Response response) throws IOException {
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             toogleRefresh();
                         }
                     });
-                    String jsonData = response.body().string();
-                    //Log.v(TAG,jsonData);
-                    if (response.isSuccessful()) {
-                        Log.v(TAG, jsonData);
+                    try {
+                        String jsonData = response.body().string();
+                        Log.v(TAG,jsonData);
+                        if (response.isSuccessful()) {
 
 
-                        try {
                             mCurrent = getCurrentDetails(jsonData);
                              /*
-                        Add runonUiThread method so that updateDisplay runs on the main UI
+                        Add run onUiThread method so that updateDisplay runs on the main UI
                          */
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -128,12 +126,15 @@ public class MainActivity extends ActionBarActivity {
                                     upDateDisplay();
                                 }
                             });
-                        } catch (JSONException e) {
-                            Log.e(TAG, "Jsonobject: ", e);
                         }
-                    } else {
-                        alertUserAboutError();
+                        else {
+                            alertUserAboutError();
+                        }
                     }
+                    catch (JSONException e) {
+                        Log.e(TAG, "Jsonobject: ", e);
+                    }
+
 
                 }
             });
